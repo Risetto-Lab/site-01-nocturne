@@ -12,6 +12,7 @@ gsap.registerPlugin(SplitText, ScrollTrigger);
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const manifestoRef = useRef<HTMLParagraphElement>(null);
   const reduced = useReducedMotion();
@@ -59,8 +60,23 @@ export default function Hero() {
       },
     });
 
+    // headline lifts and fades as the hero scrolls out, slightly ahead of the torus
+    const exit = gsap.to(contentRef.current, {
+      yPercent: -35,
+      opacity: 0,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "75% top",
+        scrub: true,
+      },
+    });
+
     return () => {
       trigger.kill();
+      exit.scrollTrigger?.kill();
+      exit.kill();
       heroScrollState.progress = 0;
     };
   }, [reduced]);
@@ -77,7 +93,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative z-10 flex flex-col items-center text-center">
+      <div ref={contentRef} className="relative z-10 flex flex-col items-center text-center">
         <h1
           ref={headlineRef}
           className="font-display select-none text-[18vw] font-semibold leading-[0.85] tracking-[-0.02em] text-ink sm:text-[14vw] lg:text-[11vw]"

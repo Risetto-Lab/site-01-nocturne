@@ -1,9 +1,13 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import SectionLabel from "./SectionLabel";
+import Reveal from "./Reveal";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type Project = {
   index: string;
@@ -84,7 +88,7 @@ function WorkCard({ project }: { project: Project }) {
 
   return (
     <div
-      className="group relative"
+      className="work-card group relative"
       style={{ perspective: "800px" }}
       data-cursor="grow"
     >
@@ -130,21 +134,53 @@ function WorkCard({ project }: { project: Project }) {
 }
 
 export default function SelectedWork() {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+
+  useEffect(() => {
+    if (reduced || !gridRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>(".work-card").forEach((card, i) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 80 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            delay: (i % 2) * 0.12,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+              once: true,
+            },
+          }
+        );
+      });
+    }, gridRef);
+
+    return () => ctx.revert();
+  }, [reduced]);
+
   return (
     <section id="work" className="w-full bg-bg px-6 py-32 sm:px-12 lg:py-40">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-6">
-          <SectionLabel index="02" title="Selected Work" />
-        </div>
-        <div className="mb-16 flex items-end justify-between lg:mb-20">
-          <h2 className="font-display text-4xl font-semibold tracking-tight text-ink sm:text-6xl">
-            Work that ships
-            <br />
-            <span className="text-muted">after dark.</span>
-          </h2>
-          <span className="hidden pb-2 text-sm text-muted sm:block">04 projects</span>
-        </div>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
+        <Reveal y={32}>
+          <div className="mb-6">
+            <SectionLabel index="02" title="Selected Work" />
+          </div>
+          <div className="mb-16 flex items-end justify-between lg:mb-20">
+            <h2 className="font-display text-4xl font-semibold tracking-tight text-ink sm:text-6xl">
+              Work that ships
+              <br />
+              <span className="text-muted">after dark.</span>
+            </h2>
+            <span className="hidden pb-2 text-sm text-muted sm:block">04 projects</span>
+          </div>
+        </Reveal>
+        <div ref={gridRef} className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
           <div className="flex flex-col gap-6 sm:gap-8">
             <WorkCard project={PROJECTS[0]} />
             <WorkCard project={PROJECTS[2]} />
