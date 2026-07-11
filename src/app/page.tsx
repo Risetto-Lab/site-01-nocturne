@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <SiteHeader />
-      <main>
+      <main id="main">
         <Hero />
         <Manifesto />
         <SelectedWork />

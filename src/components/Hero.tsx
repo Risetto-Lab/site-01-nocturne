@@ -87,7 +87,10 @@ export default function Hero() {
       ref={sectionRef}
       className="relative flex h-[100svh] w-full flex-col items-center justify-center overflow-hidden px-6"
     >
-      <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
+      <div
+        className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
+        aria-hidden
+      >
         <div className="h-[120vw] w-[120vw] max-h-[900px] max-w-[900px] sm:h-[70vw] sm:w-[70vw]">
           <HeroScene />
         </div>

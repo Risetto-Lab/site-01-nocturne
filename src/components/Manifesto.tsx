@@ -64,9 +64,7 @@ export default function Manifesto() {
               key={i}
               className={`manifesto-line font-display font-medium leading-[1.15] tracking-tight text-[7vw] sm:text-[4.5vw] lg:text-[3.2vw] ${
                 i % 2 === 0 ? "text-ink" : "text-muted"
-              } ${i % 2 === 1 ? "pl-[6vw] sm:pl-[4vw]" : ""} ${
-                reduced ? "" : "opacity-[0.08]"
-              }`}
+              } ${i % 2 === 1 ? "pl-[6vw] sm:pl-[4vw]" : ""}`}
             >
               {line}
             </p>

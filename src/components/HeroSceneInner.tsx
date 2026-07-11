@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { MeshTransmissionMaterial, Environment, Lightformer } from "@react-three/drei";
 import * as THREE from "three";
@@ -74,14 +74,29 @@ function TorusKnot({ detail }: { detail: number }) {
 export default function HeroSceneInner() {
   const coarse = useIsCoarsePointer();
   const detail = coarse ? 16 : 96;
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(true);
+
+  // pause the render loop entirely once the hero has scrolled out of view
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => {
+      setVisible(entry.isIntersecting);
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <Canvas
-      camera={{ position: [0, 0, 5.2], fov: 42 }}
-      dpr={coarse ? 1 : [1, 1.75]}
-      gl={{ antialias: true, alpha: true }}
-      style={{ background: "transparent" }}
-    >
+    <div ref={wrapRef} className="h-full w-full">
+      <Canvas
+        frameloop={visible ? "always" : "never"}
+        camera={{ position: [0, 0, 5.2], fov: 42 }}
+        dpr={coarse ? 1 : [1, 1.75]}
+        gl={{ antialias: true, alpha: true }}
+        style={{ background: "transparent" }}
+      >
       <ambientLight intensity={0.3} />
       <directionalLight position={[3, 2, 4]} intensity={0.6} color="#F2F0EB" />
       <TorusKnot detail={detail} />
@@ -108,6 +123,7 @@ export default function HeroSceneInner() {
           form="ring"
         />
       </Environment>
-    </Canvas>
+      </Canvas>
+    </div>
   );
 }

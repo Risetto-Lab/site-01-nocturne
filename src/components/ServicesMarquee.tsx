@@ -89,13 +89,16 @@ export default function ServicesMarquee() {
       className="w-full overflow-hidden border-y border-white/5 bg-bg py-12"
       aria-label="Services"
     >
-      <div ref={trackRef} className="flex w-max items-center gap-10">
+      <ul className="sr-only">
+        {SERVICES.map((service) => (
+          <li key={service}>{service}</li>
+        ))}
+      </ul>
+      <div ref={trackRef} className="flex w-max items-center gap-10" aria-hidden>
         {track.map((service, i) => (
           <Fragment key={i}>
             <MarqueeWord word={service} accent={i % 6 === 2} />
-            <span className="text-2xl text-accent/60" aria-hidden>
-              ✦
-            </span>
+            <span className="text-2xl text-accent/60">✦</span>
           </Fragment>
         ))}
       </div>
