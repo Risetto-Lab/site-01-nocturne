@@ -80,20 +80,27 @@ export default function Hero() {
       <div className="relative z-10 flex flex-col items-center text-center">
         <h1
           ref={headlineRef}
-          className="font-display select-none text-[18vw] font-semibold leading-[0.85] tracking-tight text-ink sm:text-[14vw] lg:text-[10vw]"
+          className="font-display select-none text-[18vw] font-semibold leading-[0.85] tracking-[-0.02em] text-ink sm:text-[14vw] lg:text-[11vw]"
         >
           NOCTURNE
         </h1>
         <p
           ref={manifestoRef}
-          className="font-body mt-6 max-w-md text-balance text-base text-muted sm:text-lg"
+          className="font-body mt-8 max-w-md text-balance text-base text-muted sm:text-lg"
         >
-          A studio for ideas that only make sense after midnight.
+          A studio for ideas that only make sense{" "}
+          <span className="text-ink">after midnight</span>.
         </p>
       </div>
 
+      <div className="absolute bottom-8 left-6 z-10 hidden text-xs uppercase tracking-[0.3em] text-muted sm:block sm:left-12">
+        EST. 2018 — London
+      </div>
       <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-xs uppercase tracking-[0.3em] text-muted">
         Scroll
+      </div>
+      <div className="absolute bottom-8 right-6 z-10 hidden text-xs uppercase tracking-[0.3em] text-muted sm:block sm:right-12">
+        Brand — Motion — Space
       </div>
     </section>
   );

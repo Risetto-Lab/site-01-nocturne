@@ -45,20 +45,30 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="flex w-full flex-col items-center justify-center bg-bg px-6 py-40 text-center sm:px-12"
+      className="flex w-full flex-col items-center justify-center bg-bg px-6 py-40 text-center sm:px-12 lg:py-56"
     >
-      <span className="text-xs uppercase tracking-[0.3em] text-muted">Get in touch</span>
-      <div ref={wrapRef} className="mt-8 flex items-center justify-center">
+      <div className="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-muted">
+        <span className="text-accent">04</span>
+        <span className="h-px w-8 bg-muted/40" aria-hidden />
+        <span>Get in touch</span>
+        <span className="h-px w-8 bg-muted/40" aria-hidden />
+        <span className="text-accent">04</span>
+      </div>
+      <p className="font-display mt-10 max-w-2xl text-2xl font-medium text-muted sm:text-3xl">
+        Got something that keeps you up at night?
+      </p>
+      <div ref={wrapRef} className="mt-6 flex items-center justify-center">
         <a
           ref={linkRef}
           href="mailto:hello@nocturne.studio"
           data-cursor="grow"
-          className="font-display inline-block break-all text-[9vw] font-semibold leading-none tracking-tight text-ink transition-colors duration-300 hover:text-accent sm:text-6xl lg:text-7xl"
+          className="font-display group inline-block break-all text-[9vw] font-semibold leading-none tracking-tight text-ink transition-colors duration-300 hover:text-accent sm:text-6xl lg:text-7xl"
         >
           hello@nocturne.studio
+          <span className="mt-3 block h-[3px] w-full origin-left scale-x-0 bg-accent transition-transform duration-500 ease-out group-hover:scale-x-100" />
         </a>
       </div>
-      <p className="mt-10 max-w-sm text-sm text-muted">
+      <p className="mt-12 max-w-sm text-sm text-muted">
         NOCTURNE Studio — a fictional creative practice.
         Currently taking on a small number of projects for 2026.
       </p>
